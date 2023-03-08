@@ -206,7 +206,37 @@ class Product {
     }
 }
 
+class Cart{
+    showCart(req, res) {
+        const querySt = `SELECT prodName, prodPrice
+        FROM cart
+        INNER JOIN products ON cart.product_id = products.id
+        WHERE cart.user_id = ${req.params.id};`;
+        dB.query(querySt, (err, results)=> {
+            if(err) throw err;
+            res.status(200).json({results: results})
+        });
+    }
+    addToCart(req, res) {
+        const querySt = 
+        `
+        INSERT INTO cart (user_id, product_id) VALUES (${id}, ${id});
+        `;
+        dB.query(querySt,[req.body],
+            (err)=> {
+                if(err){
+                    res.status(400).json({err: "Couldn't add item."});
+                }else {
+                    res.status(200).json({msg: "Item added to cart."});
+                }
+            }
+        );    
+
+    }
+}
+
 module.exports = {
     User, 
-    Product
+    Product,
+    Cart
 }
