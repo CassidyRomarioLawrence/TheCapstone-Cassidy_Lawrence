@@ -208,7 +208,7 @@ class Product {
 
 class Cart{
     showCart(req, res) {
-        const querySt = `SELECT prodName, prodPrice
+        const querySt = `SELECT prodName, prodPrice,prodImage
         FROM cart
         INNER JOIN products ON cart.product_id = products.id
         WHERE cart.user_id = ${req.params.id};`;
@@ -220,18 +220,47 @@ class Cart{
     addToCart(req, res) {
         const querySt = 
         `
-        INSERT INTO cart (user_id, product_id) VALUES (${id}, ${id});
+        INSERT INTO cart
+        SET ?;
         `;
         dB.query(querySt,[req.body],
             (err)=> {
-                if(err){
-                    res.status(400).json({err: "Couldn't add item."});
+                if(err){console.log(err);
+                    // res.status(400).json({err: "Couldn't add item."});
                 }else {
                     res.status(200).json({msg: "Item added to cart."});
                 }
             }
         );    
 
+    }
+    deleteAllCart(req, res) {
+        const querySt =
+            `
+            DELETE FROM cart
+            WHERE user_id = ?;
+            `;
+        dB.query(querySt, [req.params.id], (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json({msg:"Deleted from cart"})
+            }
+        })
+    }
+    deleteItemCart(req, res) {
+        const querySt =
+            `
+            DELETE FROM cart
+            WHERE product_id = ?;
+            `;
+        dB.query(querySt, [req.params.id], (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json({msg:"Deleted item cart"})
+            }
+        })
     }
 }
 

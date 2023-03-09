@@ -82,7 +82,16 @@ parser.json(),
 })
 
 // Show user cart
-router.get('/cart/:id', (req, res)=> {
+router.get('/user/:id/carts', (req, res)=> {
     cart.showCart(req, res);
+})
+// Delete all items from cart
+router.delete('/user/:id/cart', (req, res) => {
+    cart.deleteAllCart(req, res);
+})
+
+// Delete single item from cart
+router.delete('/user/:id/cart/:id', (req, res) => {
+    cart.deleteItemCart(req, res);
 })
 module.exports = router;
