@@ -80,7 +80,12 @@ parser.json(),
 (req, res)=> {
     cart.addToCart(req, res);
 })
-
+// Update Quantity in cart
+router.put('/cart/:id', 
+parser.json(),
+(req, res)=> {
+    cart.updateQuantity(req, res);
+})
 // Show user cart
 router.get('/user/:id/carts', (req, res)=> {
     cart.showCart(req, res);
@@ -89,7 +94,6 @@ router.get('/user/:id/carts', (req, res)=> {
 router.delete('/user/:id/cart', (req, res) => {
     cart.deleteAllCart(req, res);
 })
-
 // Delete single item from cart
 router.delete('/user/:id/cart/:id', (req, res) => {
     cart.deleteItemCart(req, res);

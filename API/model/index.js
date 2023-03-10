@@ -234,6 +234,22 @@ class Cart{
         );    
 
     }
+    updateQuantity(req, res) {
+        const querySt = 
+        `
+        UPDATE cart SET quantity = ?
+        WHERE id = ?
+        `;
+        dB.query(querySt,[req.body, req.params.id],
+            (err)=> {
+                if(err){
+                    res.status(400).json({err: "Could not update product."});
+                }else {
+                    res.status(200).json({msg: "Product successfully updated"});
+                }
+            }
+        );
+    }
     deleteAllCart(req, res) {
         const querySt =
             `
@@ -252,7 +268,7 @@ class Cart{
         const querySt =
             `
             DELETE FROM cart
-            WHERE product_id = ?;
+            WHERE id = ?;
             `;
         dB.query(querySt, [req.params.id], (err) => {
             if (err) {
