@@ -75,7 +75,7 @@ router.delete('/product/:id',
 
 // =========CART===============
 // Add item to cart
-router.post('/cart', 
+router.post('/user/:id/cart', 
 parser.json(), 
 (req, res)=> {
     cart.addToCart(req, res);
